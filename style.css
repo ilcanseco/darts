@@ -1,0 +1,23 @@
+html,
+button {
+  font-family: "Futura", "sans-serif";
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1vh;
+}
