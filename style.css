@@ -19,5 +19,14 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1vh;
+  margin-top: 3vh;
+}
+
+.content {
+  margin-top: 3vh;
+  display: flex;
+}
+
+.grid-item {
+  background-color: cadetblue;
 }
