@@ -1,4 +1,5 @@
 let playerCount = 0;
+let scores = [];
 
 let container = document.getElementById("container");
 
@@ -31,12 +32,14 @@ function numPlayers() {
 
 function makeTable(players) {
   for (let i = 0; i < players * 2; i++) {
+    content.style.setProperty("--grid-rows", 2);
+    content.style.setProperty("--grid-cols", players);
     let cell = document.createElement("div");
     cell.classList.add("grid-item");
     if (i < players) {
       cell.textContent = `Player ${i + 1}`;
     } else {
-      cell.textContent = "501";
+      cell.textContent = "";
     }
     content.appendChild(cell);
   }
@@ -47,6 +50,6 @@ function makeFiveOhOne() {
   clearMessage();
 
   message.textContent =
-    "Count down from 501. Final dart must be a double to win. Click start for a New Game";
+    "Count down from 501. Final dart must be a double to win. Enter the turn total in the box. Click start for a New Game";
   start();
 }
