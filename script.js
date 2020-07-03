@@ -1,6 +1,7 @@
 let playerCount = 0;
 let scores = [];
 let inProgress = false;
+let currentGame = "";
 
 let container = document.getElementById("container");
 
@@ -62,7 +63,6 @@ function makeTable(players) {
   container.appendChild(scoreBox);
 
   inProgress = true;
-  console.log(inProgress);
 }
 
 function clearTable() {
@@ -72,18 +72,27 @@ function clearTable() {
   }
 }
 
+function removeStart() {
+  container.removeChild(start);
+}
+
 /* function to make and play 501. Starts by displaying rules. When start is clicked, asked for number of players then makes game */
-function playFiveOhOne() {
+function makeFiveOhOne() {
+  inProgress = false;
   clearMessage();
   message.textContent =
     "Count down from 501. Final dart must be a double to win. Enter the turn total in the box. Click start for a New Game";
-  start();
 
-  console.log(inProgress);
-  if (inProgress) {
-    console.log("yes");
-    // for (let i = 0; i < playerCount; i++) {
-    //   console.log(i);
-    // }
-  }
+  currentGame = "501";
+  start();
+}
+
+function makeOneThousandOne() {
+  inProgress = false;
+  clearMessage();
+  message.textContent =
+    "Count down from 1001. Final Dart must be a double to win. Enter the turn total in the box. Click start for a New Game";
+
+  currentGame = "1001";
+  start();
 }
