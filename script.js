@@ -1,14 +1,15 @@
 let playerCount = 0;
-let scores = [];
-
 let inProgress = false;
 let pressed = false;
 let currentGame = "";
 
+let scores = [];
+let atwArray = [15, 16, "Doubles", 17, 18, "Triples", 19, 20, "Bullseye"];
+
 let turnTotal = 0;
+let round = 0;
 
 let player = 1;
-let targetNumber = 0;
 
 let container = document.getElementById("container");
 
@@ -372,7 +373,47 @@ function playAtw(array) {
   player = 1;
   target = 15;
 
-  playMessage.textContent = `Player ${player}'s turn. Aim for ${target}.`;
+  playMessage.textContent =
+    `Player ${player}'s turn. Aim for ` + atwArray[0] + ".";
+}
+
+function addTotal(e) {
+  if (e.key === "Enter") {
+    // getting the value of the scoreBox and storing it in turnTotal
+    e.preventDefault();
+    turnTotal = parseInt(e.target.value);
+    e.target.value = "";
+
+    // checks to see if player misses if doesnt, += turnTotal. If miss, ceil(score / 2)
+    // round gets updated whenever first player goes again
+    if (player === playerCount) {
+      if (turnTotal !== 0) {
+        scores[player - 1] += turnTotal;
+      } else {
+        scores[player - 1] = Math.ceil(scores[player - 1] / 2);
+      }
+      player = 1;
+      round++;
+    } else {
+      if (turnTotal !== 0) {
+        scores[player - 1] += turnTotal;
+      } else {
+        scores[player - 1] = Math.ceil(scores[player - 1] / 2);
+      }
+      player++;
+    }
+
+    // update the table after scores are modified
+    for (let i = 0; i < playerCount; i++) {
+      document.getElementById(`cell${i + playerCount}`).textContent = scores[i];
+    }
+
+    // updating playMessage
+    round <= 8
+      ? (playMessage.textContent =
+          `Player ${player}'s turn. Aim for ` + atwArray[round])
+      : (playMessage.textContent = "Placeholder text");
+  }
 }
 
 // function playCricket() {
