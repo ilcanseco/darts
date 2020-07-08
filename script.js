@@ -408,11 +408,17 @@ function addTotal(e) {
       document.getElementById(`cell${i + playerCount}`).textContent = scores[i];
     }
 
+    // finding the max of the array
+    let highestScore = Math.max(...scores);
+    let winningPlayer = scores.indexOf(highestScore);
+
     // updating playMessage
     round <= 8
       ? (playMessage.textContent =
           `Player ${player}'s turn. Aim for ` + atwArray[round])
-      : (playMessage.textContent = "Placeholder text");
+      : (playMessage.textContent = `Player ${
+          winningPlayer + 1
+        } wins with a score of ${highestScore}! Please click start for a New Game.`);
   }
 }
 
