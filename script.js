@@ -275,10 +275,11 @@ function playFiveOhOne(array) {
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
-  scoreBox.addEventListener("keydown", getTotal);
+  scoreBox.addEventListener("keydown", subTotal);
 
   // setting the scores array based on the number of players and displaying it to the DOM
   setTable(array, 501);
+  player = 1;
 
   playMessage.textContent = `Player ${player}'s turn.`;
 }
@@ -288,6 +289,7 @@ updates the table to reflect score after turn */
 function subTotal(e) {
   if (e.key === "Enter") {
     let noWin = true;
+    let winner = 0;
 
     // getting the value of the scoreBox and storing it in turnTotal
     e.preventDefault();
@@ -298,13 +300,19 @@ function subTotal(e) {
     if (player === playerCount) {
       if (scores[player - 1] - turnTotal >= 0) {
         scores[player - 1] -= turnTotal;
-        if (scores[player - 1] === 0) noWin = false;
+        if (scores[player - 1] === 0) {
+          noWin = false;
+          winner = player;
+        }
       }
       player = 1;
     } else {
       if (scores[player - 1] - turnTotal >= 0) {
         scores[player - 1] -= turnTotal;
-        if (scores[player - 1] === 0) noWin = false;
+        if (scores[player - 1] === 0) {
+          noWin = false;
+          winner = player;
+        }
       }
       player++;
     }
@@ -318,7 +326,9 @@ function subTotal(e) {
     if (noWin) {
       playMessage.textContent = `Player ${player}'s turn.`;
     } else {
-      playMessage.textContent = `Player ${player - 1} wins!`;
+      playerCount === 1
+        ? (playMessage.textContent = `You finished! Please click start for a New Game`)
+        : (playMessage.textContent = `Player ${winner} wins! Please click start for a New Game`);
     }
   }
 }
@@ -328,10 +338,11 @@ function playOneThousandOne(array) {
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
-  scoreBox.addEventListener("keydown", getTotal);
+  scoreBox.addEventListener("keydown", subTotal);
 
   // setting the scores array based on the number of players and displaying it to the DOM
   setTable(array, 1001);
+  player = 1;
 
   playMessage.textContent = `Player ${player}'s turn.`;
 }
@@ -341,12 +352,27 @@ function playFinisher(array) {
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
-  scoreBox.addEventListener("keydown", getTotal);
+  scoreBox.addEventListener("keydown", subTotal);
 
   // setting the scores array based on the number of players and displaying it to the DOM
   setTable(array, 170);
+  player = 1;
 
   playMessage.textContent = `Player ${player}'s turn.`;
+}
+
+function playAtw(array) {
+  // adding a scorebox to the playArea to get input
+  playArea.appendChild(scoreBox);
+  playArea.appendChild(playMessage);
+  scoreBox.addEventListener("keydown", addTotal);
+
+  // setting the scores array based on the number of players and displaying it to the DOM
+  setTable(array, 100);
+  player = 1;
+  target = 15;
+
+  playMessage.textContent = `Player ${player}'s turn. Aim for ${target}.`;
 }
 
 // function playCricket() {
