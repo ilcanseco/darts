@@ -343,20 +343,30 @@ function subTotal(e) {
 
     // checks to see if player busts if doesnt, update score
     if (player === playerCount) {
-      if (scores[player - 1] - turnTotal >= 2) {
-        scores[player - 1] -= turnTotal;
-        if (scores[player - 1] === 0) {
+      if (scores[player - 1] - turnTotal >= 0) {
+        if (scores[player - 1] - turnTotal === 0) {
           noWin = false;
           winner = player;
+        } else {
+          if (scores[player - 1] - turnTotal < 2) {
+            return;
+          } else {
+            scores[player - 1] -= turnTotal;
+          }
         }
       }
       player = 1;
     } else {
-      if (scores[player - 1] - turnTotal >= 2) {
-        scores[player - 1] -= turnTotal;
-        if (scores[player - 1] === 0) {
+      if (scores[player - 1] - turnTotal >= 0) {
+        if (scores[player - 1] - turnTotal === 0) {
           noWin = false;
           winner = player;
+        } else {
+          if (scores[player - 1] - turnTotal < 2) {
+            return;
+          } else {
+            scores[player - 1] -= turnTotal;
+          }
         }
       }
       player++;
