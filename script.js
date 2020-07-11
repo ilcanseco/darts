@@ -1,10 +1,34 @@
 let playerCount = 0;
 let inProgress = false;
+let alreadyPlayed = false;
 let pressed = false;
 let currentGame = "";
 
 let scores = [];
 let atwArray = [15, 16, "Doubles", 17, 18, "Triples", 19, 20, "Bullseye"];
+let efArray = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  25,
+];
 
 let turnTotal = 0;
 let round = 0;
@@ -29,6 +53,7 @@ container.appendChild(content);
 // creating div for play area aka buttons inputs messages
 let playArea = document.createElement("div");
 playArea.textContent = "";
+playArea.classList.add("playArea");
 container.appendChild(playArea);
 
 // creating div to create input for playArea
@@ -75,6 +100,9 @@ function numPlayers() {
     if (count > 4) {
       alert("Too many players!");
       return;
+    } else if (count <= 0) {
+      alert("Too little players");
+      return;
     } else {
       playerCount = parseInt(count);
       makeTable(playerCount);
@@ -110,11 +138,20 @@ function makeTable(players) {
 function clearTable() {
   content.textContent = "";
   if (inProgress) {
+    // playArea.removeChild(playMessage);
+    // if (currentGame === "850" || currentGame === "blind") {
+    //   playArea.removeChild(buttons);
+    // } else {
+    //   playArea.removeChild(scoreBox);
+    // }
     playArea.removeChild(scoreBox);
     playArea.removeChild(playMessage);
   }
   inProgress = false;
 }
+
+// clears the buttons from the playArea;
+function clearButtons() {}
 
 // removes the start button from the playArea
 function removeStart() {
@@ -258,6 +295,8 @@ function gameSwitch(gameMode) {
     case "finisher":
       playFinisher(scores);
       break;
+    case "blind":
+      playBlindShot(scores);
     default:
       break;
   }
@@ -273,6 +312,11 @@ function setTable(array, value) {
 
 /* playing 501 */
 function playFiveOhOne(array) {
+  /*  DEBUG THIS LATER */
+  // var old_element = document.getElementById("scoreBox");
+  // var newScoreBox = old_element.cloneNode(true);
+  // old_element.parentNode.replaceChild(new_element, old_element);
+
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -299,7 +343,7 @@ function subTotal(e) {
 
     // checks to see if player busts if doesnt, update score
     if (player === playerCount) {
-      if (scores[player - 1] - turnTotal >= 0) {
+      if (scores[player - 1] - turnTotal >= 2) {
         scores[player - 1] -= turnTotal;
         if (scores[player - 1] === 0) {
           noWin = false;
@@ -308,7 +352,7 @@ function subTotal(e) {
       }
       player = 1;
     } else {
-      if (scores[player - 1] - turnTotal >= 0) {
+      if (scores[player - 1] - turnTotal >= 2) {
         scores[player - 1] -= turnTotal;
         if (scores[player - 1] === 0) {
           noWin = false;
@@ -336,6 +380,11 @@ function subTotal(e) {
 
 /* playing 1001 */
 function playOneThousandOne(array) {
+  /*  DEBUG THIS LATER */
+  // var old_element = document.getElementById("scoreBox");
+  // var newScoreBox = old_element.cloneNode(true);
+  // old_element.parentNode.replaceChild(new_element, old_element);
+
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -350,6 +399,11 @@ function playOneThousandOne(array) {
 
 /* playing finisher */
 function playFinisher(array) {
+  /*  DEBUG THIS LATER */
+  // var old_element = document.getElementById("scoreBox");
+  // var newScoreBox = old_element.cloneNode(true);
+  // old_element.parentNode.replaceChild(new_element, old_element);
+
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -358,11 +412,18 @@ function playFinisher(array) {
   // setting the scores array based on the number of players and displaying it to the DOM
   setTable(array, 170);
   player = 1;
+  round = 0;
 
   playMessage.textContent = `Player ${player}'s turn.`;
 }
 
+/* playing around the world */
 function playAtw(array) {
+  /*  DEBUG THIS LATER */
+  // var old_element = document.getElementById("scoreBox");
+  // var newScoreBox = old_element.cloneNode(true);
+  // old_element.parentNode.replaceChild(new_element, old_element);
+
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -371,7 +432,6 @@ function playAtw(array) {
   // setting the scores array based on the number of players and displaying it to the DOM
   setTable(array, 100);
   player = 1;
-  target = 15;
 
   playMessage.textContent =
     `Player ${player}'s turn. Aim for ` + atwArray[0] + ".";
@@ -408,12 +468,12 @@ function addTotal(e) {
       document.getElementById(`cell${i + playerCount}`).textContent = scores[i];
     }
 
-    // finding the max of the array
+    // finding the max of the scores array
     let highestScore = Math.max(...scores);
     let winningPlayer = scores.indexOf(highestScore);
 
     // updating playMessage
-    round <= 8
+    round < atwArray.length
       ? (playMessage.textContent =
           `Player ${player}'s turn. Aim for ` + atwArray[round])
       : (playMessage.textContent = `Player ${
@@ -421,6 +481,106 @@ function addTotal(e) {
         } wins with a score of ${highestScore}! Please click start for a New Game.`);
   }
 }
+
+/* playing 850 */
+function playEightFifty(array) {
+  // adding buttons to the playArea
+  let buttons = document.createElement("div");
+  buttons.classList.add("buttons");
+
+  let noneB = document.createElement("button");
+  noneB.textContent = "0 Darts";
+  noneB.value = 0;
+  noneB.addEventListener("click", increase);
+  buttons.appendChild(noneB);
+
+  let oneB = document.createElement("button", increase);
+  oneB.textContent = "1 Dart";
+  oneB.value = 1;
+  oneB.addEventListener("click", increase);
+  buttons.appendChild(oneB);
+
+  let twoB = document.createElement("button", increase);
+  twoB.textContent = "2 Darts";
+  twoB.value = 2;
+  twoB.addEventListener("click", increase);
+  buttons.appendChild(twoB);
+
+  let threeB = document.createElement("button", increase);
+  threeB.textContent = "3 Darts";
+  threeB.value = 3;
+  threeB.addEventListener("click", increase);
+  buttons.appendChild(threeB);
+
+  playArea.appendChild(playMessage);
+  playArea.appendChild(buttons);
+
+  // setting the scores array based on the number of players and displaying it to the DOM
+  setTable(array, 0);
+  player = 1;
+  round = 0;
+
+  playMessage.textContent = `Player ${player}'s turn. Aim for ${efArray[0]}.`;
+}
+
+function increase(e) {
+  if (player === playerCount) {
+    scores[player - 1] += efArray[round] * e.target.value;
+    player = 1;
+    round++;
+  } else {
+    scores[player - 1] += efArray[round] * e.target.value;
+    player++;
+  }
+
+  // update the table after scores are modified
+  for (let i = 0; i < playerCount; i++) {
+    document.getElementById(`cell${i + playerCount}`).textContent = scores[i];
+  }
+
+  // finding the max of the scores array
+  let highestScore = Math.max(...scores);
+  let winningPlayer = scores.indexOf(highestScore);
+
+  // updating playMessage
+  round < efArray.length
+    ? (playMessage.textContent =
+        `Player ${player}'s turn. Aim for ` + efArray[round])
+    : (playMessage.textContent = `Player ${
+        winningPlayer + 1
+      } wins with a score of ${highestScore}! Please click start for a New Game.`);
+}
+
+function playBlindShot(array) {
+  let buttons = document.createElement("div");
+  buttons.classList.add("buttons");
+
+  let noneB = document.createElement("button");
+  noneB.textContent = "0 Darts";
+  noneB.value = 0;
+  noneB.addEventListener("click", increaseBlind);
+  buttons.appendChild(noneB);
+
+  let oneB = document.createElement("button", increase);
+  oneB.textContent = "1 Dart";
+  oneB.value = 1;
+  oneB.addEventListener("click", increaseBlind);
+  buttons.appendChild(oneB);
+
+  let twoB = document.createElement("button", increase);
+  twoB.textContent = "2 Darts";
+  twoB.value = 2;
+  twoB.addEventListener("click", increaseBlind);
+  buttons.appendChild(twoB);
+
+  setTable(array, 0);
+  player = 1;
+  round = 0;
+
+  playMessage.textContent = `Player ${player}'s turn.`;
+}
+
+function increaseBlind(e) {}
 
 // function playCricket() {
 //   makeCricketTable();
