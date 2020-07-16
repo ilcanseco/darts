@@ -4,6 +4,7 @@ let alreadyPlayed = false;
 let pressed = false;
 let currentGame = "";
 
+let playersArr = [];
 let scores = [];
 let atwArray = [15, 16, "Doubles", 17, 18, "Triples", 19, 20, "Bullseye"];
 let efArray = [
@@ -120,7 +121,14 @@ function makeTable(players) {
     cell.id = `cell${i}`;
     cell.classList.add("grid-item");
     if (i < players) {
-      cell.textContent = `Player ${i + 1}`;
+      if (players === 1) {
+        playersArr[i] = "Solo";
+        cell.textContent = "Solo";
+      } else {
+        let name = prompt("Enter name.");
+        playersArr[i] = name;
+        cell.textContent = name;
+      }
     } else {
       cell.textContent = "";
     }
@@ -233,7 +241,7 @@ function makeEightFifty() {
   message.textContent =
     "On each turn the player aims for sections on the dart board from 1 to 20. If any of the darts hit the total gets added to" +
     " the score, but only if they scored in the corresponding number. For example if the target number is 7 and only one " +
-    "dart hit 7, then the total for that turn would only be 7 points. All doubles and triples are ignored except for the D25. " +
+    "dart hit 7, then the total for that turn would only be 7 points. All doubles and triples are ignored. " +
     "Click the button options for how many darts scored. Click start for a New Game.";
 
   currentGame = "850";
@@ -312,11 +320,6 @@ function setTable(array, value) {
 
 /* playing 501 */
 function playFiveOhOne(array) {
-  /*  DEBUG THIS LATER */
-  // var old_element = document.getElementById("scoreBox");
-  // var newScoreBox = old_element.cloneNode(true);
-  // old_element.parentNode.replaceChild(new_element, old_element);
-
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -326,7 +329,7 @@ function playFiveOhOne(array) {
   setTable(array, 501);
   player = 1;
 
-  playMessage.textContent = `Player ${player}'s turn.`;
+  playMessage.textContent = `${playersArr[0]}'s turn.`;
 }
 
 /* function to parse input and save it into turnTotal global variable. After, subtracts from score array and 
@@ -343,29 +346,37 @@ function subTotal(e) {
 
     // checks to see if player busts if doesnt, update score
     if (player === playerCount) {
-      if (scores[player - 1] - turnTotal >= 0) {
-        if (scores[player - 1] - turnTotal === 0) {
+      let sub = scores[player - 1] - turnTotal;
+      if (sub >= 0) {
+        if (sub === 0) {
+          scores[player - 1] = sub;
           noWin = false;
           winner = player;
+          scoreBox.removeEventListener("keydown", subTotal);
         } else {
-          if (scores[player - 1] - turnTotal < 2) {
+          if (sub < 2) {
+            // player++;
             return;
           } else {
-            scores[player - 1] -= turnTotal;
+            scores[player - 1] = sub;
           }
         }
       }
       player = 1;
     } else {
-      if (scores[player - 1] - turnTotal >= 0) {
-        if (scores[player - 1] - turnTotal === 0) {
+      let sub = scores[player - 1] - turnTotal;
+      if (sub >= 0) {
+        if (sub === 0) {
+          scores[player - 1] = sub;
           noWin = false;
           winner = player;
+          scoreBox.removeEventListener("keydown", subTotal);
         } else {
-          if (scores[player - 1] - turnTotal < 2) {
+          if (sub < 2) {
+            // player++;
             return;
           } else {
-            scores[player - 1] -= turnTotal;
+            scores[player - 1] = sub;
           }
         }
       }
@@ -379,22 +390,19 @@ function subTotal(e) {
 
     // updating playMessage
     if (noWin) {
-      playMessage.textContent = `Player ${player}'s turn.`;
+      playMessage.textContent = `${playersArr[player - 1]}'s turn.`;
     } else {
       playerCount === 1
         ? (playMessage.textContent = `You finished! Please click start for a New Game`)
-        : (playMessage.textContent = `Player ${winner} wins! Please click start for a New Game`);
+        : (playMessage.textContent = `${
+            playersArr[winner - 1]
+          } wins! Please click start for a New Game`);
     }
   }
 }
 
 /* playing 1001 */
 function playOneThousandOne(array) {
-  /*  DEBUG THIS LATER */
-  // var old_element = document.getElementById("scoreBox");
-  // var newScoreBox = old_element.cloneNode(true);
-  // old_element.parentNode.replaceChild(new_element, old_element);
-
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -409,11 +417,6 @@ function playOneThousandOne(array) {
 
 /* playing finisher */
 function playFinisher(array) {
-  /*  DEBUG THIS LATER */
-  // var old_element = document.getElementById("scoreBox");
-  // var newScoreBox = old_element.cloneNode(true);
-  // old_element.parentNode.replaceChild(new_element, old_element);
-
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -424,16 +427,11 @@ function playFinisher(array) {
   player = 1;
   round = 0;
 
-  playMessage.textContent = `Player ${player}'s turn.`;
+  playMessage.textContent = `${playersArr[0]}'s turn.`;
 }
 
 /* playing around the world */
 function playAtw(array) {
-  /*  DEBUG THIS LATER */
-  // var old_element = document.getElementById("scoreBox");
-  // var newScoreBox = old_element.cloneNode(true);
-  // old_element.parentNode.replaceChild(new_element, old_element);
-
   // adding a scorebox to the playArea to get input
   playArea.appendChild(scoreBox);
   playArea.appendChild(playMessage);
@@ -444,7 +442,7 @@ function playAtw(array) {
   player = 1;
 
   playMessage.textContent =
-    `Player ${player}'s turn. Aim for ` + atwArray[0] + ".";
+    `${playersArr[0]}'s turn. Aim for ` + atwArray[0] + ".";
 }
 
 function addTotal(e) {
@@ -485,10 +483,9 @@ function addTotal(e) {
     // updating playMessage
     round < atwArray.length
       ? (playMessage.textContent =
-          `Player ${player}'s turn. Aim for ` + atwArray[round])
-      : (playMessage.textContent = `Player ${
-          winningPlayer + 1
-        } wins with a score of ${highestScore}! Please click start for a New Game.`);
+          `${playersArr[player - 1]}'s turn. Aim for ` + atwArray[round])
+      : ((playMessage.textContent = `${playersArr[winningPlayer]} wins with a score of ${highestScore}! Please click start for a New Game.`),
+        scoreBox.removeEventListener("keydown", addTotal));
   }
 }
 
@@ -530,7 +527,7 @@ function playEightFifty(array) {
   player = 1;
   round = 0;
 
-  playMessage.textContent = `Player ${player}'s turn. Aim for ${efArray[0]}.`;
+  playMessage.textContent = `${playersArr[0]}'s turn. Aim for ${efArray[0]}.`;
 }
 
 function increase(e) {
@@ -555,10 +552,8 @@ function increase(e) {
   // updating playMessage
   round < efArray.length
     ? (playMessage.textContent =
-        `Player ${player}'s turn. Aim for ` + efArray[round])
-    : (playMessage.textContent = `Player ${
-        winningPlayer + 1
-      } wins with a score of ${highestScore}! Please click start for a New Game.`);
+        `${playersArr[player - 1]}'s turn. Aim for ` + efArray[round])
+    : (playMessage.textContent = `${playersArr[winningPlayer]} wins with a score of ${highestScore}! Please click start for a New Game.`);
 }
 
 function playBlindShot(array) {
@@ -587,7 +582,7 @@ function playBlindShot(array) {
   player = 1;
   round = 0;
 
-  playMessage.textContent = `Player ${player}'s turn.`;
+  playMessage.textContent = `${playersArr[0]}'s turn.`;
 }
 
 function increaseBlind(e) {}
