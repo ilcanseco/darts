@@ -11,8 +11,7 @@ body {
 
 html,
 button {
-  font-family: "Futura", "sans-serif";
-  color: #252323;
+  font-family: "Futura", "Noto Sans";
 }
 
 header {
@@ -34,11 +33,11 @@ header h1 {
 header button {
   border-color: none;
   border-style: none;
+  color: #f8ffe5;
   background-color: #1b9aaa;
   text-align: center;
   border-radius: 10px;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  padding: 1% 2%;
 }
 
 header button:hover {
@@ -48,26 +47,39 @@ header button:hover {
 #selectors {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 #container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin-top: 3vh;
   margin-left: 5%;
   margin-right: 5%;
+  width: 100%;
+  height: 100%;
 }
 
 #container button {
   color: #ef476f;
 }
 
+.message {
+  width: 50%;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
 .content {
   margin-top: 3vh;
-  width: 10vw;
-  height: 10vh;
+  margin-bottom: 3vh;
   display: grid;
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-cols), 1fr);
@@ -75,7 +87,8 @@ header button:hover {
 }
 
 .grid-item {
-  background-color: rgb(158, 179, 157);
-  border: 1px solid #000;
+  background-color: #f8ffe5;
+  border: 1px solid #ef476f;
   justify-content: center;
+  padding: 5vh;
 }
