@@ -45,17 +45,21 @@ message.textContent = "Select a game";
 message.style.fontSize = "3vh";
 container.appendChild(message);
 
+let right = document.createElement("div");
+right.classList.add("right");
+container.appendChild(right);
+
+// creating div for play area aka buttons & input messages
+let playArea = document.createElement("div");
+playArea.textContent = "";
+playArea.classList.add("playArea");
+right.appendChild(playArea);
+
 // creating div to display the table
 let content = document.createElement("div");
 content.textContent = "";
 content.classList.add("content");
-container.appendChild(content);
-
-// creating div for play area aka buttons inputs messages
-let playArea = document.createElement("div");
-playArea.textContent = "";
-playArea.classList.add("playArea");
-container.appendChild(playArea);
+right.appendChild(content);
 
 // creating div to create input for playArea
 let scoreBox = document.createElement("input");
@@ -210,8 +214,7 @@ function makeCricket() {
   currentGame = "cricket";
   /*    DONT
    *     FORGET
-   *     THIS
-   *     SHIT */
+   *     THIS */
   start();
   pressed = true;
 }
