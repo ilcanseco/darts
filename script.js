@@ -42,7 +42,6 @@ let container = document.getElementById("container");
 let message = document.createElement("div");
 message.classList.add("message");
 message.textContent = "Select a game";
-message.style.fontSize = "3vh";
 container.appendChild(message);
 
 let right = document.createElement("div");
@@ -128,10 +127,12 @@ function makeTable(players) {
       if (players === 1) {
         playersArr[i] = "Solo";
         cell.textContent = "Solo";
+        cell.style.backgroundColor = "#ffc43d";
       } else {
         let name = prompt("Enter name.");
         playersArr[i] = name;
         cell.textContent = name;
+        cell.style.backgroundColor = "#ffc43d";
       }
     } else {
       cell.textContent = "";
