@@ -128,14 +128,18 @@ function makeTable(players) {
         playersArr[i] = "Solo";
         cell.textContent = "Solo";
         cell.style.backgroundColor = "#ffc43d";
+        cell.style.padding = "2vh 3vw";
       } else {
         let name = prompt("Enter name.");
         playersArr[i] = name;
         cell.textContent = name;
         cell.style.backgroundColor = "#ffc43d";
+        cell.style.padding = "2vh 3vw";
       }
     } else {
       cell.textContent = "";
+      cell.style.backgroundColor = "#ffffff";
+      cell.style.padding = "5vh";
     }
     content.appendChild(cell);
   }
