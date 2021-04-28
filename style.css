@@ -38,6 +38,7 @@ header button {
   text-align: center;
   border-radius: 10px;
   padding: 1% 2%;
+  font-size: medium;
 }
 
 header button:hover {
