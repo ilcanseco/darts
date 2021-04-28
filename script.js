@@ -127,19 +127,37 @@ function makeTable(players) {
       if (players === 1) {
         playersArr[i] = "Solo";
         cell.textContent = "Solo";
-        cell.style.backgroundColor = "#ffc43d";
+        cell.style.backgroundColor = "#06d6a0";
         cell.style.padding = "2vh 3vw";
+        cell.style.borderRadius = "5px 5px 0px 0px";
       } else {
         let name = prompt("Enter name.");
         playersArr[i] = name;
         cell.textContent = name;
-        cell.style.backgroundColor = "#ffc43d";
+        cell.style.backgroundColor = "#06d6a0";
         cell.style.padding = "2vh 3vw";
+        if (i === 0) {
+          cell.style.borderRadius = "5px 0px 0px 0px";
+        }
+        if (i === players - 1) {
+          cell.style.borderRadius = "0px 5px 0px 0px";
+        }
       }
     } else {
       cell.textContent = "";
       cell.style.backgroundColor = "#ffffff";
       cell.style.padding = "5vh";
+      if (players === 1) {
+        cell.style.borderRadius = "0px 0px 5px 5px";
+      }
+      else {
+        if (i === players) {
+          cell.style.borderRadius = "0px 0px 0px 5px"; 
+        }
+        if (i === (players * 2) - 1) {
+          cell.style.borderRadius = "0px 0px 5px 0px";
+        }
+      }
     }
     content.appendChild(cell);
   }
