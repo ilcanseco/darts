@@ -64,7 +64,10 @@ header button:hover {
 }
 
 #container button {
-  color: #ef476f;
+  color: #241a1c;
+  background-color: #ffc43d;
+  border-radius: 3px;
+  border-width: thin;
   box-shadow: 0.2vh 0.2vh 0.2vh lightgray;
 }
 
@@ -72,8 +75,9 @@ header button:hover {
   width: 50%;
   padding: 2%;
   border-style: solid;
+  border-width: thin;
   border-radius: 5px;
-  border-color: #ef476f;
+  border-color: #241a1c;
   background-color: #ffffff;
   box-shadow: 0.5vh 0.5vh 0.5vh lightgray;
 }
@@ -82,7 +86,7 @@ header button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 50vw;
 }
 
 .content {
@@ -98,6 +102,5 @@ header button:hover {
 
 .grid-item {
   background-color: #f8ffe5;
-  border: 1px solid #ef476f;
-  /* justify-items: flex-end; */
+  border: 1px solid #241a1c;
 }
