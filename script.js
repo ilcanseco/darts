@@ -146,7 +146,7 @@ function makeTable(players) {
     } else {
       cell.textContent = "";
       cell.style.backgroundColor = "#ffffff";
-      cell.style.padding = "5vh";
+      cell.style.padding = "6vh";
       if (players === 1) {
         cell.style.borderRadius = "0px 0px 5px 5px";
       }

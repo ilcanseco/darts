@@ -21,8 +21,8 @@ header {
   text-align: left;
   background-color: #1b9aaa;
   justify-content: flex-start;
-  width: 100%;
-  height: 10%;
+  width: 100vw;
+  height: 10vh;
   box-shadow: 0.5vh 0.5vh 0.5vh lightgray;
 }
 
@@ -61,7 +61,7 @@ header button:hover {
   margin-top: 3vh;
   margin-left: 5%;
   margin-right: 5%;
-  height: 75vh;
+  height: 85vh;
 }
 
 #container button {
@@ -81,7 +81,7 @@ header button:hover {
 }
 
 .message {
-  width: 50%;
+  width: 50vw;
   padding: 2%;
   border-style: solid;
   border-width: thin;
@@ -98,8 +98,9 @@ header button:hover {
   width: 50vw;
 }
 
-.playArea {
-  align-content: center;
+.playArea div {
+  /* background-color: black; */
+  align-items: center;
 }
 
 .content {
