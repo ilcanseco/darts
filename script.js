@@ -67,6 +67,7 @@ scoreBox.id = "scoreBox";
 
 // creating div for messages in playArea
 let playMessage = document.createElement("div");
+playMessage.id = "playMessage";
 playMessage.textContent = "";
 
 // clears messages
